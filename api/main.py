@@ -20,7 +20,7 @@ def get_example():
     """
     This endpoint returns a JSON object consisting of a simple message.
     """
-    return {"message": "Hello World!"}
+    return {"message": "Hello World!","year":2025}
 
 @app.get("/example2")  
 def get_example2(name):    # can also pass in parameters
