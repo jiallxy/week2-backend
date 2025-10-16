@@ -1,6 +1,16 @@
 
 import random
+# FastAPI is a Python library that 
+# allows us to 
+# - take in a request (typically sent from the client)
+# - send back a response
 from fastapi import FastAPI
+
+# CORS (Cross-Origin Resource Sharing)
+# allows us to restrict/enable which
+# client urls are allowed to call 
+# this backend code. 
+# CORS is part of the FastAPI library.
 from fastapi.middleware.cors import CORSMiddleware
 
 # 1. Data Source (In-Memory List)
@@ -63,3 +73,62 @@ def get_random_food_choice():
     
     # Return a Python dictionary, which FastAPI converts to a JSON response.
     return {"status": "success", "choice": selected_choice}
+
+    @app.get("/my-choice/")
+def get_my_food_choice(choice):    
+    # convert to integer
+    choiceNumber = int(choice)
+
+    # check if choice is a valid index i.e. between 0 and length of list
+    if choiceNumber >= 0 and choiceNumber < len(FOOD_CHOICES):
+      # Use the passed in choice number; passed in as query parameter
+      selected_choice = FOOD_CHOICES[choiceNumber]
+    
+      # Return a Python dictionary, which FastAPI converts to a JSON response.     
+      return {"status": "success", "choice": selected_choice}
+    else:
+      return {"status": "error", "message": f"invalid choice:{choice}"}  
+
+
+@app.get("/alternative-choice/{choice}")
+def get_my_alt_choice(choice):    
+    # convert to integer
+    choiceNumber = int(choice)
+
+    # check if choice is a valid index i.e. between 0 and length of list
+    if choiceNumber >= 0 and choiceNumber < len(FOOD_CHOICES):
+      # Use the passed in choice number; passed in as path parameter aka REST parameter
+      selected_choice = FOOD_CHOICES[choiceNumber]
+    
+      # Return a Python dictionary, which FastAPI converts to a JSON response.     
+      return {"status": "success", "altchoice": selected_choice}
+    else:
+      return {"status": "error", "message": f"invalid choice:{choice}"}  
+      
+# 2. Define the endpoint at the path /madlib/
+# It accepts three query parameters: noun, adjective, and verb
+@app.get("/madlib/")
+def generate_madlib(noun, adjective, verb):
+    """
+    Generates a silly sentence using the provided words.    
+    """
+    
+    # 3. Construct the sentence (the "Mad Lib") using an f-string
+    sentence = (
+        f"The {adjective} {noun} decided to {verb} "
+        f"loudly in the park today, much to everyone's surprise!"
+    )
+    
+    # 4. Return a JSON response containing the full sentence
+    return {
+        "title": "Your Generated Mad Lib",
+        "adjective": adjective,
+        "noun": noun,
+        "verb": verb,
+        "madlib_sentence": sentence
+    }
+
+# TO RUN:
+# 1. Put this code in api/main.py and deploy to Vercel
+# 2. Test by using your-vercel-backend-url/docs
+# 3. Later call from front-end using JavaScript fetch()
