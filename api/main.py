@@ -60,7 +60,8 @@ def get_random_food_choice():
     # Return a Python dictionary, which FastAPI converts to a JSON response.
     return {"status": "success", "choice": selected_choice}
 
-    @app.get("/my-choice/")
+
+@app.get("/my-choice/")
 def get_my_food_choice(choice):    
     # convert to integer
     choiceNumber = int(choice)
