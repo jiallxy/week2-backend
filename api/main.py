@@ -1,12 +1,19 @@
 from fastapi import FastAPI
-
+from fastapi.middleware.cors import CORSMiddleware
 # Initialize the FastAPI application
 app = FastAPI(
     title="FastAPI Example",
     description="This is an example of using FastAPI"
 )
 
-
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # star means all client urls allowed 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")           #endpoint, or route, always starts with a forward slash
 def default_route():    #route handler function
