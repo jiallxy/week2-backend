@@ -128,7 +128,24 @@ def generate_madlib(noun, adjective, verb):
         "verb": verb,
         "madlib_sentence": sentence
     }
+# Sample facts list
+facts = [
+    "The first computer programmer was a woman named Ada Lovelace",
+    "The first computer mouse was made of wood",
+    "The first website is still online",
+    "The term 'bug' in computing came from an actual moth",
+    "JavaScript was created in just 10 days",
+    "The heart of a shrimp is located in its head.",
+    "A snail can sleep for three years.",    
+    "Slugs have four noses.",
+    "Bananas are berries, but strawberries aren't.",
+    "A group of flamingos is called a 'flamboyance'.",
+    "Octopuses have three hearts."
+]
 
+@app.get("/random-fact")
+async def get_random_fact():
+    return {"fact": random.choice(facts)}
 # TO RUN:
 # 1. Put this code in api/main.py and deploy to Vercel
 # 2. Test by using your-vercel-backend-url/docs
