@@ -12,6 +12,7 @@ from fastapi import FastAPI
 # CORS is part of the FastAPI library.
 from fastapi.middleware.cors import CORSMiddleware
 
+
 # 1. Data Source (In-Memory List)
 # This list simulates a simple, pre-defined dataset.
 FOOD_CHOICES = [
